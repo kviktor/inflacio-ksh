@@ -1,0 +1,48 @@
+<div id="chart-wrapper">
+  <canvas id="myChart"></canvas>
+</div>
+
+<div class="row valign-wrapper">
+    <br />
+    <br />
+
+    <div class="col m1" style="text-align: center;">
+        Aktív termékek
+    </div>
+    <div id="active-datasets" class="col m11"></div>
+</div>
+
+<hr />
+
+<div class="row">
+  <input type="text" placeholder="Keresés..."/>
+  <div id="inactive-datasets">
+  {% for data in data.data %}
+    <div class="label-pill" data-code="{{ data.code }}" data-status="inactive">
+      <div style="background-color: #{{ data.color }}"></div>
+        {{ data.label }}
+    </div>
+  {% endfor %}
+  </div>
+</div>
+
+<script>
+  const labels = [
+    {%- for date in data.dates -%}
+      '{{ date }}',
+    {% endfor %}
+  ];
+
+  const dataset = [
+    {% for data in data.data %}
+    {
+      "label": '{{ data.label}}',
+      "data": [{% for value in data.prices %}{{ value|default("null", true)}} ,{% endfor %}],
+      "borderColor": "#{{data.color}}",
+      "backgroundColor": "#{{data.color}}",
+      "code": '{{ data.code }}',
+    },
+    {% endfor %}
+  ];
+</script>
+<script src="core.js"></script>

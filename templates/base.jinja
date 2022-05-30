@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Infláció{% block title %}{% endblock %}</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="core.css">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="nav-wrapper">
+          <a href="index.html" class="brand-logo left">Infláció</a>
+            <ul class="right">
+              <li id="nav-yearly"><a href="eves.html">Éves</a></li>
+              <li id="nav-monthly"><a href="havi.html">Havi</a></li>
+            </ul>
+        </div>
+      </nav>
+      </header>
+      <main>
+        <div class="container">
+          {% block content %}{% endblock %}
+        </div>
+      </main>
+      <footer class="page-footer">
+        <div class="footer-copyright">
+          <div class="container">
+            <span class="right">
+              Készítette
+              <a href="https://github.com/kviktor" class="grey-text text-lighten-2">@kviktor</a>
+              a
+              <a href="https://www.ksh.hu/" class="grey-text text-lighten-2">KSH</a>
+              adataiból.
+            </span>
+          </div>
+        </div>
+      </footer>
+  </body>
+</html>

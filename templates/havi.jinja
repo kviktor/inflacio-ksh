@@ -1,0 +1,9 @@
+{% extends "base.jinja" %}
+
+{% block title %} - Havi{% endblock %}
+
+{% block content %}
+  {% with data=monthly %}
+    {% include "chart.jinja" %}
+  {% endwith %}
+{% endblock %}

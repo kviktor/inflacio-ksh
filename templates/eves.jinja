@@ -1,0 +1,9 @@
+{% extends "base.jinja" %}
+
+{% block title %} - Éves{% endblock %}
+
+{% block content %}
+  {% with data=yearly %}
+    {% include "chart.jinja" %}
+  {% endwith %}
+{% endblock %}
