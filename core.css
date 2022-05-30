@@ -1,0 +1,53 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.container {
+    max-width: 90%;
+    width: 90%;
+}
+
+nav {
+    margin-bottom: 25px;
+}
+
+#chart-wrapper {
+    position: relative;
+    height: 70vh;
+    width: 90vw;
+}
+
+.label-pill {
+    cursor: pointer;
+    display: inline-block;
+    width: fit-content;
+    padding: 2px 15px;
+    margin: 5px;
+
+    // shadows
+    transition: box-shadow .3s;
+    border-radius:10px;
+    border: 1px solid #ccc;
+    background: #fff;
+}
+
+.label-pill:hover {
+    box-shadow: 0 0 11px rgba(33,33,33,.2); 
+}
+
+.label-pill div {
+    display: inline-block;
+    width: 12px;
+    height: 10px;
+    margin-right: 5px;
+}
+
+.brand-logo {
+    margin-left: 10px;
+}
