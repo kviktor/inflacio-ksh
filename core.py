@@ -1,13 +1,18 @@
 import csv
+import hashlib
 
 from jinja2 import Environment, FileSystemLoader
 import arrow
+import requests
 
 from colors import colors
 
-env = Environment(
-    loader=FileSystemLoader("templates"),
-)
+env = Environment(loader=FileSystemLoader("templates"))
+
+SOURCES = {
+    "yearly": "ara0004.csv",
+    "monthly": "ara0044.csv",
+}
 
 
 def is_invalid_value(value):
@@ -76,10 +81,8 @@ def parse_csv(filename, input_date_format, output_date_format):
 
 
 def get_context_data():
-    yearly = parse_csv("sources/stadat-ara0004-1.1.1.4-hu.csv", "YYYY", "YYYY")
-    monthly = parse_csv(
-        "sources/stadat-ara0044-1.2.1.6-hu.csv", "YYYY. MMMM", "YYYY. MMM"
-    )
+    yearly = parse_csv(f"sources/stadat-{SOURCES['yearly']}", "YYYY", "YYYY")
+    monthly = parse_csv(f"sources/stadat-{SOURCES['monthly']}", "YYYY. MMMM", "YYYY. MMM")
 
     return {
         "yearly": yearly,
@@ -100,5 +103,23 @@ def build():
             f.write(content)
 
 
-if __name__ == "__name__":
+def update():
+    for name in SOURCES.values():
+        response = requests.get(f"https://www.ksh.hu/stadat_files/ara/hu/{name}")
+        response.raise_for_status()
+
+        online_hash = hashlib.sha256(response.content).hexdigest()
+        with open(f"sources/stadat-{name}", "rb") as f:
+            repo_hash = hashlib.sha256(f.read()).hexdigest()
+
+        if online_hash == repo_hash:
+            continue
+
+        print(f"Found new version for {name}")
+        with open(f"sources/stadat-{name}", "wb") as f:
+            f.write(response.content)
+
+
+if __name__ == "__main__":
+    update()
     build()
