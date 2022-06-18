@@ -81,12 +81,3 @@ var initialCodes = [14110, 14107, 13305];
 for (var i = 0; i<initialCodes.length; i++) {
     document.querySelector('[data-code="' + initialCodes[i] + '"]').click();
 }
-
-
-// add the active class to te navs by JS for some reason
-var pathName = window.location.pathname;
-if (pathName.indexOf("havi.html") !== -1) {
-    document.getElementById("nav-monthly").classList.add("active");
-} else if (pathName.indexOf("eves.html") !== -1) {
-    document.getElementById("nav-yearly").classList.add("active");
-}

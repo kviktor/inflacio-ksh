@@ -17,8 +17,12 @@
         <div class="nav-wrapper">
           <a href="index.html" class="brand-logo left">Infláció</a>
             <ul class="right">
-              <li id="nav-yearly"><a href="eves.html">Éves</a></li>
-              <li id="nav-monthly"><a href="havi.html">Havi</a></li>
+              <li id="nav-yearly" class="{% block nav_yearly_class %}{% endblock %}">
+                <a href="eves.html">Éves</a>
+              </li>
+              <li id="nav-monthly" class="{% block nav_monthly_class %}{% endblock %}">
+                  <a href="havi.html">Havi</a>
+              </li>
             </ul>
         </div>
       </nav>
