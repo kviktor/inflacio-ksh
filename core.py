@@ -13,6 +13,7 @@ SOURCES = {
     "yearly": "ara0004.csv",
     "monthly": "ara0044.csv",
 }
+COLORS_BY_CODE = {}
 
 
 def is_invalid_value(value):
@@ -24,6 +25,14 @@ def int_or_none(value):
         return None
 
     return int(value.replace(" ", ""))
+
+
+def get_color_code(code):
+    if code not in COLORS_BY_CODE:
+        color = colors[len(COLORS_BY_CODE)]
+        COLORS_BY_CODE[code] = color
+
+    return COLORS_BY_CODE[code]
 
 
 def parse_csv(filename, input_date_format, output_date_format):
@@ -61,7 +70,7 @@ def parse_csv(filename, input_date_format, output_date_format):
                     "code": code,
                     "label": name,
                     "prices": prices,
-                    "color": colors[idx],
+                    "color": get_color_code(code),
                 }
             )
 
@@ -81,12 +90,12 @@ def parse_csv(filename, input_date_format, output_date_format):
 
 
 def get_context_data():
-    yearly = parse_csv(f"sources/stadat-{SOURCES['yearly']}", "YYYY", "YYYY")
     monthly = parse_csv(f"sources/stadat-{SOURCES['monthly']}", "YYYY. MMMM", "YYYY. MMM")
+    yearly = parse_csv(f"sources/stadat-{SOURCES['yearly']}", "YYYY", "YYYY")
 
     return {
-        "yearly": yearly,
         "monthly": monthly,
+        "yearly": yearly,
         "last_update": arrow.utcnow().format("YYYY-MM-DD"),
     }
 
