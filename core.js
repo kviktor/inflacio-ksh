@@ -31,11 +31,35 @@ const myChart = new Chart(
 );
 
 
+function updateHash(action, code) {
+    var hash = window.location.hash;
+    var hashCodes = hash ? window.location.hash.substring(1).split(",") : [];
+    if(action == "add" && hashCodes.indexOf(code) == -1) {
+        hashCodes.push(code);
+    } else if (action == "remove") {
+        hashCodes = hashCodes.filter(function(item) {
+            return item !== code
+        });
+    }
+
+    newHash = hashCodes.toString()
+    window.location.hash = newHash;
+
+    var navIds = ["nav-yearly", "nav-monthly"];
+    for(var i=0; i<navIds.length; i++) {
+        var aTag = document.getElementById(navIds[i]).getElementsByTagName("a")[0];
+        var parts = aTag.href.split(".html");
+        aTag.href = parts[0] + ".html#" + newHash;
+    }
+}
+
+
 function addToDataset(code) {
     for (var i = 0; i<dataset.length; i++) {
         if(code == dataset[i].code) {
             myChart.data.datasets.push(dataset[i]);
             myChart.update();
+            updateHash("add", code);
             break;
         }
     }
@@ -47,6 +71,7 @@ function removeFromDataset(code) {
         return (obj.code != code);
     });
     myChart.update();
+    updateHash("remove", code);
 }
 
 
@@ -70,23 +95,25 @@ function onClick() {
 
 }
 
+
 // adds the onClick event listener to all the pills
 var elements = document.getElementsByClassName("label-pill")
 for (var i = 0; i < elements.length; i++) {
     elements[i].addEventListener("click", onClick);
 }
 
-// adds the products show on page load
-var initialCodes = [14110, 14107, 13305];
-for (var i = 0; i<initialCodes.length; i++) {
-    document.querySelector('[data-code="' + initialCodes[i] + '"]').click();
+
+function initialize() {
+    var hash = window.location.hash;
+    if(hash) {
+        var initialCodes = hash.substring(1).split(",");
+    } else {
+        var initialCodes = [14110, 14107, 13305];
+    }
+
+    for (var i = 0; i<initialCodes.length; i++) {
+        document.querySelector('[data-code="' + initialCodes[i] + '"]').click();
+    }
 }
 
-
-// add the active class to te navs by JS for some reason
-var pathName = window.location.pathname;
-if (pathName.indexOf("havi.html") !== -1) {
-    document.getElementById("nav-monthly").classList.add("active");
-} else if (pathName.indexOf("eves.html") !== -1) {
-    document.getElementById("nav-yearly").classList.add("active");
-}
+initialize();

@@ -8,6 +8,7 @@
     <title>Infláció - Havi</title>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="icon" type="image/png" href="favicon.png" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="core.css">
   </head>
@@ -17,8 +18,12 @@
         <div class="nav-wrapper">
           <a href="index.html" class="brand-logo left">Infláció</a>
             <ul class="right">
-              <li id="nav-yearly"><a href="eves.html">Éves</a></li>
-              <li id="nav-monthly"><a href="havi.html">Havi</a></li>
+              <li id="nav-yearly" class="">
+                <a href="eves.html">Éves</a>
+              </li>
+              <li id="nav-monthly" class="active">
+                  <a href="havi.html">Havi</a>
+              </li>
             </ul>
         </div>
       </nav>
@@ -44,7 +49,6 @@
 <hr />
 
 <div class="row">
-  <input type="text" placeholder="Keresés..."/>
   <div id="inactive-datasets">
   
     <div class="label-pill" data-code="10001" data-status="inactive">
