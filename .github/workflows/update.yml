@@ -1,0 +1,36 @@
+name: Update https://inflacio.szi.app/
+on:
+  workflow_dispatch:
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    outputs:
+      are_we_dirty:
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+      - run: pip install -r requirements.txt
+      - run: python core.py
+      - run: git diff --quiet || echo 'ARE_WE_DIRTY=yep' >> $GITHUB_ENV
+      - run: echo "are we dirty? $ARE_WE_DIRTY"
+      - run: |
+          git config --global user.name "GH"
+          git config --global user.email "gh@gh.gh"
+          git add sources/*
+          git commit -m "generated via GH actions"
+          git push
+        if: ${{ env.ARE_WE_DIRTY == 'yep' }}
+      - run: |
+          cp -v build/*.html /tmp/
+          git checkout release
+          cp -v /tmp/*.html .
+          git add *.html
+          git commit -m "generated via GH actions"
+          git push
+        if: ${{ env.ARE_WE_DIRTY == 'yep' }}
