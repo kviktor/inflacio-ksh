@@ -3,6 +3,7 @@ import hashlib
 
 from jinja2 import Environment, FileSystemLoader
 import arrow
+import minify_html
 import requests
 
 from colors import colors
@@ -108,8 +109,9 @@ def build():
     for template in templates:
         content = env.get_template(template).render(**context)
         name = template.replace(".jinja", ".html")
-        with open("build/" + name, "w") as f:
-            f.write(content)
+        with open("build/m_" + name, "w") as f:
+            minified = minify_html.minify(content, minify_js=True)
+            f.write(minified)
 
 
 def update():
