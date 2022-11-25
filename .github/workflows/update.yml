@@ -1,4 +1,4 @@
-name: Update https://inflacio.szi.app/
+name: Update GH pages with latest data
 on:
   workflow_dispatch:
 
@@ -22,6 +22,7 @@ jobs:
       - run: |
           git config --global user.name "GH"
           git config --global user.email "gh@gh.gh"
+      - run: |
           git add sources/*
           git commit -m "generated via GH actions"
           git push
@@ -30,7 +31,10 @@ jobs:
           cp -v build/*.html /tmp/
           git checkout release
           cp -v /tmp/*.html .
+          git diff --quiet || echo 'ARE_WE_DIRTY_ON_RELEASE=yep' >> $GITHUB_ENV
+          echo "are we dirty on release branch? $ARE_WE_DIRTY_ON_RELEASE"
+      - run: |
           git add *.html
           git commit -m "generated via GH actions"
           git push
-        if: ${{ env.ARE_WE_DIRTY == 'yep' }}
+        if: ${{ env.ARE_WE_DIRTY_ON_RELEASE == 'yep' }}
