@@ -4,7 +4,7 @@ on:
 
 jobs:
   main:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     outputs:
       are_we_dirty:
     steps:
@@ -13,7 +13,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.9'
           cache: 'pip'
       - run: pip install -r requirements.txt
       - run: python core.py
