@@ -1,7 +1,6 @@
 # generated with https://github.com/google/palette.js/tree/master
 # probably rainbow
 colors = [
-    "8abb67",
     "59a5ab",
     "452b88",
     "3f5baa",
@@ -191,4 +190,5 @@ colors = [
     "e49836",
     "4c93bf",
     "bcbc49",
+    "8abb67",
 ]
